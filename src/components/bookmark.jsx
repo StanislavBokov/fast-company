@@ -8,7 +8,7 @@ const Bookmark = ({status,fnToggle}) => {
         'bi bi-bookmark-fill m-1'
     }
     return (
-        <div className='border border-black w-25 bg-light'>
+        <div className='border border-black w-25 p-2 bg-light'>
         <i 
           className={getMark(status.bookmark)} 
           onClick={()=>fnToggle.onToggle(status._id)}
