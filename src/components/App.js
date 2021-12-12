@@ -4,31 +4,28 @@ import SearchStatus from "./searchStatus";
 import API from "../API";
 
 function App() {
-    const [users, setUsers] = useState(API.users.fetchAll())
-    
+    const [users, setUsers] = useState(API.users.fetchAll());
     const handleDelete = (userId) => {
-        const newList = users.filter((item)=>item._id!==userId)
-      
-        setUsers(newList)
-    }
+        const newList = users.filter((item) => item._id !== userId);
+        setUsers(newList);
+    };
     const handleToggleBookmark = (id) => {
         const markId = users.findIndex((c) => c._id === id);
-        !users[markId].bookmark?
-         users[markId].bookmark = true:
-         users[markId].bookmark = false
+        !users[markId].bookmark
+            ? (users[markId].bookmark = true)
+            : (users[markId].bookmark = false);
 
-        setUsers([...users])
-    }
+        setUsers([...users]);
+    };
     return (
-        users.length === 0 ? 
-        <span className = 'badge bg-danger fs-5 m-1'>Никто с тобой не тусанет</span>:
-         <>
-         <SearchStatus length={users.length}/>
-         <Users users={users} 
+        <div>
+            <SearchStatus length={users.length} />
+            <Users
                 onDelete={handleDelete}
-                onToggle={handleToggleBookmark}
-                /> 
-         </>
-    )
+                onToggleBookMark={handleToggleBookmark}
+                users={users}
+            />
+        </div>
+    );
 }
-export default App
+export default App;

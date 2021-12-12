@@ -1,14 +1,18 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const Qualitite = ({qualitite}) => {
+const Qualitie = ({ color, name, _id }) => {
     return (
-       qualitite.qualities.map((item,index)=> {
-            return <span key={index}
-                         className={`bg-${item.color} badge m-1`}>
-                        {item.name}
-                   </span>
-        })
-    )
-}
-export default Qualitite
+        <span className={"badge m-1 bg-" + color} key={_id}>
+            {name}
+        </span>
+    );
+};
 
+export default Qualitie;
+
+Qualitie.propTypes = {
+    color: PropTypes.string,
+    name: PropTypes.string,
+    _id: PropTypes.string
+};

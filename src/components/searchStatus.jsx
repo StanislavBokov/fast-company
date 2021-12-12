@@ -1,16 +1,31 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const SearchStatus = ({length}) => {
+const SearchStatus = ({ length }) => {
+    const renderPhrase = (number) => {
+        const lastOne = Number(number.toString().slice(-1));
+        if (number > 4 && number < 15) {
+            return "человек тусанет";
+        }
+        if (lastOne === 1) return "человек тусанет";
+        if ([2, 3, 4].indexOf(lastOne) >= 0) return "человека тусанут";
+        return "человек тусанет";
+    };
+    return (
+        <h2>
+            <span
+                className={"badge " + (length > 0 ? "bg-primary" : "bg-danger")}
+            >
+                {length > 0
+                    ? `${length + " " + renderPhrase(length)}   с тобой сегодня`
+                    : "Никто с тобой не тусанет"}
+            </span>
+        </h2>
+    );
+};
 
-    const spantext = length > 4 || length === 1 ?
-  `${length} человек тусанeт с тобой сегодня`:
-    `${length} человек тусанут с тобой сегодня`
-   
-   const getColar = length === 0 ? 
-        'bg-danger badge fs-5' :
-       'bg-primary badge fs-5'
-   
-   return  <span className = {getColar}>{spantext}</span>
-}  
+export default SearchStatus;
 
-export default SearchStatus
+SearchStatus.propTypes = {
+    length: PropTypes.number
+};
