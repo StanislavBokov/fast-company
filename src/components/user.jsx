@@ -47,7 +47,7 @@ export default User;
 User.propTypes = {
     _id: PropTypes.string,
     name: PropTypes.string,
-    qualities: PropTypes.object,
+    qualities: PropTypes.array,
     profession: PropTypes.object,
     completedMeetings: PropTypes.number,
     rate: PropTypes.number,
