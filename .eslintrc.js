@@ -1,4 +1,4 @@
-module.exports = {
+/*module.exports = {
   env: {
     browser: true,
     es2021: true,
@@ -15,7 +15,7 @@ module.exports = {
   rules: {
     indent: ["error", 4],
     semi: [2, "always"],
-    "space-before-function-paren": ["error", "never"],
+    "space-before-function-paren": ["error", {anonymous:"always", namde:"never"}],
     quotes: ["error", "double", { allowTemplateLiterals: true }],
   },
-};
+};*/
