@@ -27,12 +27,13 @@ const Users = ({ users:allUsers, ...rest }) => {
        
         setSelectedProf(item)
     }
+    
     const clearFilter = () => {
         setSelectedProf()
     }
 
     const filteredUsers = selectedProf 
-        ? allUsers.filter((user) => user.profession === selectedProf)
+        ? allUsers.filter((user) => JSON.stringify(user.profession)=== JSON.stringify(selectedProf))
         : allUsers
     const count = filteredUsers.length;
     const userCrop = paginate(filteredUsers, currentPage, pageSize);
@@ -53,7 +54,8 @@ const Users = ({ users:allUsers, ...rest }) => {
             </div>
         )}
             <div className="d-flex flex-column">
-            <SearchStatus length={count}/>
+            <SearchStatus length={count}/> 
+            {count > 0 && (
             <table className="table caption-top">
                 <thead>
                     <tr>
@@ -71,7 +73,7 @@ const Users = ({ users:allUsers, ...rest }) => {
                         <User key={user._id} {...rest} {...user} />
                     ))}
                 </tbody>
-            </table>
+            </table>)}
             <div className="d-flex justify-content-center">
             <Pagination
                 itemsCount={count}
