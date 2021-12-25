@@ -17,6 +17,11 @@ const Users = () => {
     const [sortBy,setSortBy] = useState({path:"name",order:"asc"})
 
     const [users, setUsers] = useState(API.users.fetchAll());
+    //  const [users,setUsers] = useState()
+   
+      /*useEffect(()=> {
+          API.users.fetchAll().then((data)=>setUsers(data))
+      },[])*/
     const handleDelete = (userId) => {
         const newList = users.filter((item) => item._id !== userId);
         setUsers(newList);

@@ -1,7 +1,8 @@
-import React from "react";
+/*import React from "react";
 import Qualitie from "./qualitie.jsx";
 import Bookmark from "./bookmark";
 import PropTypes from "prop-types";
+
 
 const User = ({
     _id,
@@ -16,10 +17,12 @@ const User = ({
 }) => {
     return (
         <tr key={_id}>
+        
             <td>{name}</td>
             <td>
                 {qualities.map((qual) => (
                     <Qualitie key={qual._id} {...qual} />
+                
                 ))}
             </td>
             <td>{profession.name}</td>
@@ -54,4 +57,4 @@ User.propTypes = {
     onDelete: PropTypes.func.isRequired,
     bookmark: PropTypes.bool,
     onToggleBookmark: PropTypes.func.isRequired
-};
+};*/

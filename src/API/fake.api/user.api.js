@@ -143,6 +143,27 @@ const users = [
         bookmark: false
     }
 ];
-export function fetchAll() {
-    return users;
-}
+/*export const fetchAll = () => {
+      new Promise((resolve) => {
+          window.setTimeout(function() {
+              resolve(users)
+          },1000)
+      })
+  }*/
+ export function fetchAll() {
+     return users
+ }
+/*const getById = (id) => {
+    new Promise((resolve)=> {
+        window.setTimeout(()=> {
+            resolve(users.find((user)=>user._id === id))
+        },1000)
+    })
+}*/
+ export default {
+     fetchAll,
+    //   getById
+ }
+//  export function fetchAll() {
+//      return users;
+//  }
