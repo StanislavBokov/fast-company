@@ -6,6 +6,7 @@ import API from "../API";
 import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UserTable from "./userTable";
+import SearchInput from "./searchInput,";
 import _ from "lodash"
 
 const Users = () => {
@@ -17,11 +18,20 @@ const Users = () => {
     const [sortBy,setSortBy] = useState({path:"name",order:"asc"})
 
     const [users, setUsers] = useState(API.users.fetchAll());
-    //  const [users,setUsers] = useState()
+    const [searchValue, setSearchValue] = useState('')
+    const handleSearchValue = (e) => {
+        setSearchValue(e.target.value)
+    }
+
+    const getSearchedUsers = () => {
+        let searchedUsers = users.filter(user => user.name.toLowerCase().includes(searchValue))
+        return searchedUsers
+    }
+    
+    const searchedUsers = getSearchedUsers()
+  
+
    
-      /*useEffect(()=> {
-          API.users.fetchAll().then((data)=>setUsers(data))
-      },[])*/
     const handleDelete = (userId) => {
         const newList = users.filter((item) => item._id !== userId);
         setUsers(newList);
@@ -46,7 +56,7 @@ const Users = () => {
         setCurrentPage(pageIndex);
     };
     const handleProffesionSelect = (item) => {
-       
+        setSearchValue('')
         setSelectedProf(item)
     } 
     const clearFilter = () => {
@@ -60,8 +70,10 @@ const Users = () => {
     const filteredUsers = selectedProf 
         ? users.filter((user) => JSON.stringify(user.profession) === JSON.stringify(selectedProf))
         : users
+    
+
     const count = filteredUsers.length;
-    const sortedUsers = _.orderBy(filteredUsers,[sortBy.path],[sortBy.order])
+    const sortedUsers = _.orderBy(searchValue?searchedUsers:filteredUsers,[sortBy.path],[sortBy.order])
     const userCrop = paginate(sortedUsers, currentPage, pageSize);
 
     return (
@@ -80,7 +92,11 @@ const Users = () => {
             </div>
         )}
             <div className="d-flex flex-column">
-            <SearchStatus length={count}/> 
+            <SearchStatus length={count}/>
+            <SearchInput
+                search={handleSearchValue}
+                value={searchValue}
+            />
             {count > 0 && (
             <UserTable users={userCrop}
                        onSort={handleSort} 
