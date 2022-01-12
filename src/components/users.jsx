@@ -24,6 +24,7 @@ const Users = () => {
     }
 
     const getSearchedUsers = () => {
+
         let searchedUsers = users.filter(user => user.name.toLowerCase().includes(searchValue))
         return searchedUsers
     }
@@ -96,6 +97,7 @@ const Users = () => {
             <SearchInput
                 search={handleSearchValue}
                 value={searchValue}
+                setProf={setSelectedProf}
             />
             {count > 0 && (
             <UserTable users={userCrop}
