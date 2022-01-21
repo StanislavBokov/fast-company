@@ -1,31 +1,39 @@
 import React, { useState,useEffect } from "react";
-import Pagination from "./pagination";
-import { paginate } from "../utils/paginate";
+import Pagination from "../../common/pagination";
+import { paginate } from "../../../utils/paginate";
 import PropTypes from "prop-types";
-import API from "../API";
-import GroupList from "./groupList";
-import SearchStatus from "./searchStatus";
-import UserTable from "./userTable";
-import SearchInput from "./searchInput,";
+import API from "../../../API";
+import GroupList from "../../common/groupList";
+import SearchStatus from "../../UI/searchStatus";
+import UserTable from "../../UI/userTable";
+import SearchInput from "../../searchInput,";
 import _ from "lodash"
 
-const Users = () => {
+const usersListPage = () => {
     
     const pageSize = 4;
     const [currentPage, setCurrentPage] = useState(1);
     const [proffesions, setProffesion] = useState()
     const [selectedProf,setSelectedProf] = useState()
     const [sortBy,setSortBy] = useState({path:"name",order:"asc"})
-
-    const [users, setUsers] = useState(API.users.fetchAll());
+    const [users, setUsers] = useState();
     const [searchValue, setSearchValue] = useState('')
+
+    useEffect(() => {
+        API.users.fetchAll().then((data) => setUsers(data))
+    },[])
+    useEffect(() => {
+        API.professions.fetchAll().then((data) => setProffesion(data))
+    },[])
+    useEffect(() => {
+        setCurrentPage(1)
+    },[selectedProf])
+ 
     const handleSearchValue = (e) => {
         setSearchValue(e.target.value)
     }
-
     const getSearchedUsers = () => {
-
-        let searchedUsers = users.filter(user => user.name.toLowerCase().includes(searchValue))
+        let searchedUsers = users && users.filter(user => user.name?.toLowerCase().includes(searchValue))
         return searchedUsers
     }
     
@@ -46,12 +54,7 @@ const Users = () => {
         setUsers([...users]);
     };
 
-    useEffect(() => {
-        API.professions.fetchAll().then((data) => setProffesion(data))
-    },[currentPage])
-    useEffect(() => {
-        setCurrentPage(1)
-    },[selectedProf])
+
 
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
@@ -124,8 +127,8 @@ const Users = () => {
 
 
 
-export default Users;
+export default usersListPage;
 
-Users.propTypes = {
+usersListPage.propTypes = {
     users: PropTypes.array
 };

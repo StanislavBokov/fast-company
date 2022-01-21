@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types"
 import { isArray } from "lodash";
-// import { isArray } from "lodash";
 
 const GroupList = ({items,valueProperty,contentPropperty,onItemSelect,selectedItem}) => {
     return (   
