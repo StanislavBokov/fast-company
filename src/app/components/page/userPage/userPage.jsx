@@ -1,31 +1,38 @@
-import React, { useState } from "react";
-import QualitiesList from "../../UI/qualities/qualitiesList";
-import { Route, useHistory } from "react-router";
-import { useEffect } from "react/cjs/react.development";
-import API from "../../../API";
-const UserPage = ({id,posts}) => {
-    console.log(posts)
-    const history = useHistory()
-  
-   const [post,setPost] = useState()
-   useEffect(() => {
-      API.users.getById(id).then((data) => setPost(data))
-   },[])
-    const handleChangeUser = () => {
-         history.push(`${id}/edit`)
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import api from "../../../api";
+import UserCard from "../../ui/userCard";
+import QualitiesCard from "../../ui/qualitiesCard";
+import MeetingsCard from "../../ui/meetingsCard";
+import Comments from "../../ui/comments";
+
+const UserPage = ({ userId }) => {
+    const [user, setUser] = useState();
+    useEffect(() => {
+        api.users.getById(userId).then((data) => setUser(data));
+    }, []);
+    if (user) {
+        return (
+            <div className="container">
+                <div className="row gutters-sm">
+                    <div className="col-md-4 mb-3">
+                        <UserCard user={user} />
+                        <QualitiesCard data={user.qualities} />
+                        <MeetingsCard value={user.completedMeetings} />
+                    </div>
+                    <div className="col-md-8">
+                        <Comments />
+                    </div>
+                </div>
+            </div>
+        );
+    } else {
+        return <h1>Loading</h1>;
     }
-   //   console.log(post)
-    
-    return post 
-        ? <div>
-              <h1>{post.name}</h1>
-              <h2>{`Профессия: ${post.profession?.name}`}</h2>
-              <span>{<QualitiesList qualities={post.qualities}/>}</span> 
-              <div><span>{`CompletedMeetings: ${post.completedMeetings}`}</span></div>
-              <h3>{`Rate: ${post.rate}`}</h3>
-              <button onClick={()=>{handleChangeUser()}}>Изменить</button>
-           </div>
-        : <h1>Loading</h1>   
-}
- 
+};
+
+UserPage.propTypes = {
+    userId: PropTypes.string.isRequired
+};
+
 export default UserPage;
